@@ -8,6 +8,7 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
 `;
+
 const App = () => {
   const [data, setData] = useState(initialData);
 
@@ -106,6 +107,7 @@ const App = () => {
     };
     setData(newData);
   };
+
   return (
     <DragDropContext
       onDragEnd={onDragEnd}
