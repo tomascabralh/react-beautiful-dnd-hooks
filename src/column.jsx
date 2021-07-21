@@ -29,20 +29,6 @@ const TaskList = styled.div`
   min-height: 100px;
 `;
 
-class InnerList extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.tasks === this.props.tasks) {
-      return false;
-    }
-    return true;
-  }
-  render() {
-    return this.props.tasks.map((task, index) => (
-      <Task key={task.id} task={task} index={index} />
-    ));
-  }
-}
-
 const Column = ({ column, tasks, index }) => {
   return (
     <Draggable draggableId={column.id} index={index}>
@@ -56,7 +42,9 @@ const Column = ({ column, tasks, index }) => {
                 {...provided.droppableProps}
                 isDraggingOver={snapshot.isDraggingOver}
               >
-                <InnerList tasks={tasks} />
+                {tasks.map((task, index) => (
+                  <Task key={task.id} task={task} index={index} />
+                ))}
                 {provided.placeholder}
               </TaskList>
             )}
