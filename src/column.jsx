@@ -1,0 +1,50 @@
+import React from "react";
+import styled from "styled-components";
+import { Droppable } from "react-beautiful-dnd";
+import Task from "./task";
+
+const Container = styled.div`
+  margin: 8px;
+  border: 1px solid lightgrey;
+  border-radius: 2px;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+`;
+const Title = styled.h3`
+  padding: 8px;
+`;
+const TaskList = styled.div`
+  padding: 8px;
+  background-color: ${(props) => (props.isDraggingOver ? "#f4ffff" : "white")};
+  -webkit-transition: background-color 1s ease-out;
+  -moz-transition: background-color 1s ease-out;
+  -o-transition: background-color 1s ease-out;
+  transition: background-color 1s ease-out;
+  flex-grow: 1;
+  min-height: 100px;
+`;
+
+const Column = ({ column, tasks }) => {
+  return (
+    <Container>
+      <Title>{column.title}</Title>
+      <Droppable droppableId={column.id}>
+        {(provided, snapshot) => (
+          <TaskList
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            isDraggingOver={snapshot.isDraggingOver}
+          >
+            {tasks.map((task, index) => (
+              <Task key={task.id} task={task} index={index} />
+            ))}
+            {provided.placeholder}
+          </TaskList>
+        )}
+      </Droppable>
+    </Container>
+  );
+};
+
+export default Column;
